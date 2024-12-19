@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Encryption</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="gradient-background">
+        <header>
+            <h1 class="main-heading">File Encryption</h1>
+        </header>
+        <main>
+            <!-- File Upload Form -->
+            <form action="{{ url_for('encrypt_file') }}" method="POST" enctype="multipart/form-data">
+                <label for="file">Choose a file to encrypt:</label>
+                <input type="file" id="file" name="file" required>
+                <button type="submit">Upload File</button>
+            </form>
+
+            {% if uploaded_filename %}
+                <!-- Show uploaded file -->
+                <h2>Uploaded File</h2>
+                <p>File: {{ uploaded_filename }}</p>
+                <a href="{{ url_for('send_file_from_server', filename=uploaded_filename) }}" download>Download Original File</a><br>
+
+                <!-- Show encrypted file -->
+                <h2>Encrypted File</h2>
+                <p>Encrypted File: {{ encrypted_filename }}</p>
+                <a href="{{ url_for('send_file_from_server', filename=encrypted_filename) }}" download>Download Encrypted File</a>
+            {% endif %}
+        </main>
+    </div>
+</body>
+</html>
