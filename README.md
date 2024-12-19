@@ -2,7 +2,7 @@
 # Cryptix-Q
 
 ## Overview
-The Secure Encryption Portal is a Flask-based web application that leverages lattice-based cryptography to encrypt files. The system uses advanced cryptographic techniques, integrates with blockchain (Ganache), and provides a user-friendly interface for secure file encryption and storage.
+The Cryptix-Q is a Flask-based web application that leverages lattice-based cryptography to encrypt files. The system uses advanced cryptographic techniques, integrates with blockchain (Ganache), and provides a user-friendly interface for secure file encryption and storage.
 
 ## Features
 - **Lattice-Based Cryptography:** Uses lattice parameters for robust encryption.
