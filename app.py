@@ -6,16 +6,16 @@ import base64
 from functools import wraps
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+
 load_dotenv()
 
-# Lattice Parameters
-n = 16  # Lattice dimension
-m = 32  # Lattice dimension (usually m > n)
-q = 257  # Modulus for the ring
-half_q = q // 2  # Half the modulus, used for binary field elements
 
-# Utility Functions
+n = 16 
+m = 32  
+q = 257  
+half_q = q // 2  
+
+
 def mod_q(x):
     return np.mod(x, q)
 
@@ -46,30 +46,30 @@ def bits_to_bytes(bits):
     return bytes(bytes_data)
 
 def keygen():
-    s = np.random.randint(low=0, high=q, size=n)  # Secret key
-    A = np.random.randint(low=0, high=q, size=(m, n))  # Public matrix A
-    e = small_error_vector(m)  # Small error vector
-    b = mod_q(A.dot(s) + e)  # Public key vector b
-    return (A, b), s  # Public key and secret key
+    s = np.random.randint(low=0, high=q, size=n)  
+    A = np.random.randint(low=0, high=q, size=(m, n))  
+    e = small_error_vector(m) 
+    b = mod_q(A.dot(s) + e) 
+    return (A, b), s 
 
 def encrypt(pk, bit):
-    A, b = pk  # Public key
-    mu = bit_to_field_element(bit)  # Convert the bit to a field element
-    r = small_error_vector(m)  # Random error vector r
-    c1 = mod_q(A.T.dot(r))  # First part of the ciphertext
-    c2 = mod_q(b.dot(r) + mu)  # Second part of the ciphertext
-    return (c1.tolist(), int(c2))  # Return the ciphertext as a tuple
+    A, b = pk  
+    mu = bit_to_field_element(bit)  
+    r = small_error_vector(m) 
+    c1 = mod_q(A.T.dot(r)) 
+    c2 = mod_q(b.dot(r) + mu) 
+    return (c1.tolist(), int(c2))  
 
 def decrypt(sk, ct):
-    c1, c2 = ct  # Ciphertext parts
+    c1, c2 = ct 
     c1 = np.array(c1)
-    x = mod_q(c2 - sk.dot(c1))  # Decryption
-    return field_element_to_bit(x)  # Convert back to bit
+    x = mod_q(c2 - sk.dot(c1))
+    return field_element_to_bit(x) 
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
 
-# Web3 connection setup
+
 ganache_url = os.getenv('GANACHE_URL')
 w3 = Web3(Web3.HTTPProvider(ganache_url))
 
@@ -83,7 +83,7 @@ AUTHORIZED_USERS = {
     os.getenv('ADMIN_USERNAME'): os.getenv('ADMIN_PASSWORD')
 }
 
-# Authentication Decorator
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -123,45 +123,45 @@ def encrypt_file():
         if file.filename == '':
             return "No file selected", 400
 
-        # Save the file temporarily
+        
         filepath = os.path.join(UPLOAD_FOLDER, file.filename)
         file.save(filepath)
 
-        # Read file contents and convert to bits
+       
         with open(filepath, 'rb') as f:
             plaintext = f.read()
         plaintext_bits = bytes_to_bits(plaintext)
 
-        # Generate keys
+       
         pk, sk = keygen()
         
-        # Encrypt each bit
+      
         encrypted_bits = []
         for bit in plaintext_bits:
             encrypted_bit = encrypt(pk, bit)
             encrypted_bits.append(encrypted_bit)
 
-        # Serialize encrypted data
+       
         serialized_data = {
             'public_key': {'A': pk[0].tolist(), 'b': pk[1].tolist()},
             'secret_key': sk.tolist(),
             'encrypted_bits': encrypted_bits
         }
         
-        # Convert to bytes for blockchain storage
+       
         encrypted_data = str(serialized_data).encode()
 
-        # Save the encrypted data to a file
+        
         encrypted_filename = f"encrypted_{file.filename}"
         encrypted_filepath = os.path.join(UPLOAD_FOLDER, encrypted_filename)
         with open(encrypted_filepath, 'wb') as encrypted_file:
             encrypted_file.write(encrypted_data)
 
-        # Get the account address to send the transaction
+       
         user_account = w3.eth.accounts[0]
         nonce = w3.eth.get_transaction_count(user_account)
 
-        # Build the transaction
+       
         tx = {
             'from': user_account,
             'to': user_account,
@@ -171,7 +171,7 @@ def encrypt_file():
             'nonce': nonce
         }
 
-        # Sign and send the transaction
+       
         private_key = os.getenv('PRIVATE_KEY')
         signed_tx = w3.eth.account.sign_transaction(tx, private_key)
         tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
