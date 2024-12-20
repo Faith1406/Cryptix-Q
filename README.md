@@ -11,6 +11,12 @@ The Cryptix-Q is a Flask-based web application that leverages lattice-based cryp
 - **User Authentication:** Secure login system for authorized users.
 - **Web Interface:** Simple and clean UI for file encryption and transaction management.
 
+##Files
+- **Cryptix-Q:** is the main application for converting normal files to lattice encrypted pqc files with the web3 implementation.
+- **Normal Encryption:** is the application to demonstrate basic encryption techniques like the RSA.
+-  **Decryptor:** is our own developed decryption software to simulate hack and decryption attempts on encrypted files of the RSA and Lattice encryptions.
+-  **Readme:** consists the detailed description of the repository.
+
 ## Technologies Used
 - **Backend:** Python (Flask framework)
 - **Frontend:** HTML, CSS
@@ -113,7 +119,8 @@ project/
 
 ## Credits
 
-This project was developed as a demonstration of lattice-based cryptography, blockchain integration, and secure file handling using Flask.  
+This project was developed as a demonstration of lattice-based cryptography, blockchain integration, and secure file handling using Flask.
+Our motto is to spread the awareness to the possibility of threats to modern era encryption techniques by the developtment of newer technologies like quantum computers.
 
 ### Team CIPHER  
 **Team Members:**  
