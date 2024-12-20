@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypted File</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="circle" style="top: 15%; left: 15%; background-color: #FFD700;"></div>
+    <div class="circle" style="top: 70%; right: 10%; background-color: #1E90FF;"></div>
+    <h1>Decrypted File Data</h1>
+    
+    <h2>Your Original Content</h2>
+    <pre>{{ decrypted_data }}</pre>
+    
+    <button onclick="window.location.href='/'">Go Back</button>
+</body>
+</html>

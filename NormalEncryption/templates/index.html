@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSA Encryption Showcase</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="circle" style="top: 10%; left: 5%;"></div>
+    <div class="circle" style="top: 50%; right: 10%;"></div>
+    <h1>RSA Encryption Showcase</h1>
+    
+    <h2>Upload and Encrypt Your File</h2>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" id="file" required>
+        <button type="submit">Encrypt File</button>
+    </form>
+
+    <h2>Encrypted Files</h2>
+    {% if encrypted_files %}
+        <ul>
+            {% for file in encrypted_files %}
+                <li>
+                    <strong>{{ file }}</strong>
+                    <form action="/view-encrypted/{{ file }}" method="GET" style="display:inline;">
+                        <button type="submit">View Encrypted Data</button>
+                    </form>
+                    <form action="/decrypt/{{ file }}" method="GET" style="display:inline;">
+                        <button type="submit">Decrypt File</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No encrypted files available.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypted Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="circle" style="top: 5%; left: 10%; background-color: #DDA0DD;"></div>
+    <div class="circle" style="top: 60%; right: 5%; background-color: #BA55D3;"></div>
+    <h1>Encrypted File Data</h1>
+    
+    <h2>Your Encrypted Content</h2>
+    <pre>{{ encrypted_data }}</pre>
+    
+    <button onclick="window.location.href='/'">Go Back</button>
+</body>
+</html>
