@@ -113,4 +113,11 @@ project/
 
 ## Credits
 
-This project was developed as a demonstration of lattice-based cryptography, blockchain integration, and secure file handling using Flask.
+This project was developed as a demonstration of lattice-based cryptography, blockchain integration, and secure file handling using Flask.  
+
+### Team CIPHER  
+**Team Members:**  
+- Aditya Naidu  
+- Aditya Bhaty  
+- Animesh Dwivedi  
+
